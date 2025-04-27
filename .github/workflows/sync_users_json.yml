@@ -1,0 +1,29 @@
+name: Sync users.json from Railway
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Каждые 30 минут
+  workflow_dispatch:  # Можно запускать вручную
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download users.json from Railway
+        run: |
+          RAILWAY_SERVICE_ID="твой-идентификатор-сервиса"
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
+          
+          curl -X GET \
+            -H "Authorization: Bearer $RAILWAY_TOKEN" \
+            -o users.json \
+            "https://backboard.railway.app/graphql/v2?query={service(id:\"$RAILWAY_SERVICE_ID\"){files(path:\"/app/users.json\"){contents}}}"
+
+      - name: Commit changes if file updated
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add users.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update users.json" && git push)
