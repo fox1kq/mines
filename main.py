@@ -79,7 +79,7 @@ def start(message):
 @bot.message_handler(func=lambda message: message.text == "🚀 Регистрация")
 def start_registration(message):
     try:
-        with open(r'D:\PythonProjects\mines\mines.png', 'rb') as photo:
+        with open('mines.png', 'rb') as photo:
             bot.send_photo(
                 message.chat.id,
                 photo,
