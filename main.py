@@ -448,10 +448,37 @@ def handle_gitpush(message):
 
     bot.reply_to(message, "🔄 Начинаю выгрузку users.json в GitHub...")
 
-    if push_to_github():
+    try:
+        # Убедимся, что файл существует
+        if not os.path.exists("/app/users.json"):
+            raise FileNotFoundError("Файл users.json не найден")
+
+        # Устанавливаем Git конфигурацию
+        subprocess.run(["git", "config", "--global", "user.name", os.getenv('GIT_USERNAME', 'github-actions')],
+                       check=True)
+        subprocess.run(["git", "config", "--global", "user.email", os.getenv('GIT_EMAIL', 'actions@github.com')],
+                       check=True)
+
+        # Добавляем изменения
+        subprocess.run(["git", "add", "users.json"], check=True)
+
+        # Коммитим
+        subprocess.run(["git", "commit", "-m", "Auto-update users.json"], check=True)
+
+        # Пушим с использованием токена
+        github_token = os.getenv('GITHUB_TOKEN')
+        if not github_token:
+            raise ValueError("GITHUB_TOKEN не установлен")
+
+        repo_url = f"https://{github_token}@github.com/ваш-username/ваш-репозиторий.git"
+        subprocess.run(["git", "push", repo_url, "HEAD:main"], check=True)
+
         bot.reply_to(message, "✅ Файл успешно выгружен в GitHub!")
-    else:
-        bot.reply_to(message, "❌ Ошибка при выгрузке. Проверьте логи.")
+
+    except Exception as e:
+        error_msg = f"❌ Ошибка: {str(e)}"
+        print(error_msg)
+        bot.reply_to(message, error_msg)
 
 # Запуск бота
 if __name__ == "__main__":
