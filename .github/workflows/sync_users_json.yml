@@ -2,7 +2,7 @@ name: Sync users.json from Railway
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Каждые 30 минут
+    - cron: '*/5 * * * *'  # Каждые 5 минут
   workflow_dispatch:  # Можно запускать вручную
 
 jobs:
