@@ -1,4 +1,4 @@
-import types
+from telebot import types
 
 import telebot
 import json
@@ -281,54 +281,177 @@ def give_access(message):
 # Старт рассылки
 @bot.message_handler(commands=['broadcast'])
 def start_broadcast(message):
-    if message.from_user.id != 702647989:
-        bot.send_message(message.chat.id, "⛔ У тебя нет доступа.")
+    if message.from_user.id != 702647989:  # Замените на ваш ID
+        bot.send_message(message.chat.id, "⛔ У вас нет прав на эту команду")
         return
 
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add("📝 Текст", "🖼️ Фото + текст")
-    msg = bot.send_message(message.chat.id, "Выбери тип рассылки:", reply_markup=markup)
-    bot.register_next_step_handler(msg, choose_broadcast_type)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    btn1 = types.KeyboardButton("📝 Текст")
+    btn2 = types.KeyboardButton("🖼️ Фото + текст")
+    btn3 = types.KeyboardButton("❌ Отмена")
+    markup.add(btn1, btn2, btn3)
 
-# Выбор типа рассылки
-def choose_broadcast_type(message):
-    if message.text == "📝 Текст":
-        msg = bot.send_message(message.chat.id, "✍️ Напиши текст для рассылки:", reply_markup=types.ReplyKeyboardRemove())
-        bot.register_next_step_handler(msg, broadcast_text)
-    elif message.text == "🖼️ Фото + текст":
-        msg = bot.send_message(message.chat.id, "📸 Отправь фото для рассылки:", reply_markup=types.ReplyKeyboardRemove())
-        bot.register_next_step_handler(msg, broadcast_photo)
-    else:
-        bot.send_message(message.chat.id, "⛔ Неверный выбор. Попробуй снова /broadcast", reply_markup=types.ReplyKeyboardRemove())
+    msg = bot.send_message(
+        message.chat.id,
+        "Выберите тип рассылки:",
+        reply_markup=markup
+    )
+    bot.register_next_step_handler(msg, process_broadcast_type)
 
-# Текстовая рассылка
-def broadcast_text(message):
-    text = message.text
-    for user_id in users:
-        try:
-            bot.send_message(user_id, text)
-        except Exception as e:
-            print(f"Не отправлено {user_id}: {e}")
-    bot.send_message(message.chat.id, "✅ Текстовая рассылка завершена.")
 
-# Фото + текст
-def broadcast_photo(message):
-    if not message.photo:
-        bot.send_message(message.chat.id, "⛔ Это не фото. Отправь именно фотографию.")
-        return
+def process_broadcast_type(message):
+    try:
+        if message.text == "❌ Отмена":
+            bot.send_message(
+                message.chat.id,
+                "Рассылка отменена",
+                reply_markup=main_menu()
+            )
+            return
 
-    file_id = message.photo[-1].file_id
-    msg = bot.send_message(message.chat.id, "✍️ Теперь напиши подпись к фото:")
-    bot.register_next_step_handler(msg, lambda m: send_photo_broadcast(m, file_id))
+        elif message.text == "📝 Текст":
+            msg = bot.send_message(
+                message.chat.id,
+                "Введите текст для рассылки:",
+                reply_markup=types.ReplyKeyboardRemove()
+            )
+            bot.register_next_step_handler(msg, send_text_broadcast)
+
+        elif message.text == "🖼️ Фото + текст":
+            msg = bot.send_message(
+                message.chat.id,
+                "Отправьте фото для рассылки:",
+                reply_markup=types.ReplyKeyboardRemove()
+            )
+            bot.register_next_step_handler(msg, process_photo_for_broadcast)
+
+        else:
+            bot.send_message(
+                message.chat.id,
+                "Неверный выбор. Попробуйте снова /broadcast",
+                reply_markup=main_menu()
+            )
+    except Exception as e:
+        bot.reply_to(message, f"Ошибка: {str(e)}")
+        print(f"Broadcast error: {e}")
+
+
+def process_photo_for_broadcast(message):
+    try:
+        if not message.photo:
+            bot.send_message(
+                message.chat.id,
+                "Это не фото. Отправьте изображение.",
+                reply_markup=main_menu()
+            )
+            return
+
+        # Сохраняем file_id последнего (самого большого) фото
+        file_id = message.photo[-1].file_id
+
+        msg = bot.send_message(
+            message.chat.id,
+            "Теперь введите текст подписи к фото:",
+            reply_markup=types.ReplyKeyboardRemove()
+        )
+        bot.register_next_step_handler(msg, lambda m: send_photo_broadcast(m, file_id))
+
+    except Exception as e:
+        bot.reply_to(message, f"Ошибка обработки фото: {str(e)}")
+        print(f"Photo process error: {e}")
+
+
+def send_text_broadcast(message):
+    try:
+        text = message.text
+        success = 0
+        errors = 0
+
+        for user_id in users:
+            try:
+                bot.send_message(user_id, text)
+                success += 1
+            except Exception as e:
+                errors += 1
+                print(f"Не отправлено {user_id}: {e}")
+
+        report = (
+            f"📊 Отчёт о рассылке:\n"
+            f"✅ Успешно: {success}\n"
+            f"❌ Ошибок: {errors}\n"
+            f"📝 Текст: {text[:100]}..."
+        )
+        bot.send_message(
+            message.chat.id,
+            report,
+            reply_markup=main_menu()
+        )
+    except Exception as e:
+        bot.reply_to(message, f"Ошибка рассылки: {str(e)}")
+        print(f"Text broadcast error: {e}")
+
 
 def send_photo_broadcast(message, file_id):
-    caption = message.text
-    for user_id in users:
-        try:
-            bot.send_photo(user_id, photo=file_id, caption=caption)
-        except Exception as e:
-            print(f"Не отправлено {user_id}: {e}")
-    bot.send_message(message.chat.id, "✅ Рассылка с фото завершена.")
+    try:
+        caption = message.text
+        success = 0
+        errors = 0
+
+        for user_id in users:
+            try:
+                bot.send_photo(
+                    user_id,
+                    photo=file_id,
+                    caption=caption
+                )
+                success += 1
+            except Exception as e:
+                errors += 1
+                print(f"Не отправлено {user_id}: {e}")
+
+        report = (
+            f"📊 Отчёт о рассылке:\n"
+            f"✅ Успешно: {success}\n"
+            f"❌ Ошибок: {errors}\n"
+            f"📸 Фото + текст: {caption[:100]}..."
+        )
+        bot.send_message(
+            message.chat.id,
+            report,
+            reply_markup=main_menu()
+        )
+    except Exception as e:
+        bot.reply_to(message, f"Ошибка рассылки: {str(e)}")
+        print(f"Photo broadcast error: {e}")
+
+
+def push_to_github():
+    try:
+        repo = Repo("/app")  # Или укажите полный путь к папке с репозиторием
+        repo.git.add("users.json")
+        repo.git.commit("-m", "Manual update users.json")
+        origin = repo.remote(name="origin")
+        origin.push()
+        return True
+    except Exception as e:
+        print(f"Git push error: {e}")
+        return False
+
+    # Добавьте эту команду для админов
+
+
+@bot.message_handler(commands=['gitpush'])
+def handle_gitpush(message):
+    if message.from_user.id != 702647989:  # Ваш ID
+        bot.reply_to(message, "⛔ У вас нет прав на эту команду")
+        return
+
+    bot.reply_to(message, "🔄 Начинаю выгрузку users.json в GitHub...")
+
+    if push_to_github():
+        bot.reply_to(message, "✅ Файл успешно выгружен в GitHub!")
+    else:
+        bot.reply_to(message, "❌ Ошибка при выгрузке. Проверьте логи.")
 
 # Запуск бота
 if __name__ == "__main__":
