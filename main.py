@@ -1,9 +1,10 @@
 from telebot import types
-
 import telebot
 import json
 from datetime import datetime
 import random
+from git import Repo
+import os
 
 # Инициализация бота
 TOKEN = '7723929403:AAFkBRy-Dbogt74fZgnIvquI4mLvjg-XFTQ'
@@ -329,6 +330,38 @@ def send_photo_broadcast(message, file_id):
         except Exception as e:
             print(f"Не отправлено {user_id}: {e}")
     bot.send_message(message.chat.id, "✅ Рассылка с фото завершена.")
+
+
+@bot.message_handler(commands=['github'])
+def handle_github_backup(message):
+    # Проверка админских прав (замените на ваш ID)
+    if message.from_user.id != 702647989:
+        bot.reply_to(message, "❌ Только для админа!")
+        return
+
+    try:
+        # 1. Путь к репозиторию (на Railway это /app)
+        repo_path = "/app"
+        repo = Repo(repo_path)
+
+        # 2. Добавляем файл
+        repo.git.add("users.json")
+
+        # 3. Коммитим изменения
+        repo.git.commit("-m", "Backup users.json")
+
+        # 4. Пушим с токеном (безопасно)
+        token = os.getenv("GITHUB_TOKEN")
+        origin = repo.remote(name="origin")
+        origin.set_url(f"https://{token}@github.com/ваш-логин/ваш-репозиторий.git")
+        origin.push()
+
+        bot.reply_to(message, "✅ Данные успешно выгружены в GitHub!")
+
+    except Exception as e:
+        error_msg = f"❌ Ошибка: {str(e)}"
+        print(error_msg)  # Для логов
+        bot.reply_to(message, error_msg)
 
 # Запуск бота
 if __name__ == "__main__":
