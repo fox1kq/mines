@@ -7,7 +7,7 @@
         "predictions_left": 0,
         "full_access": true,
         "1win_id": "432442332",
-        "last_activity": "2025-04-28 13:12:36"
+        "last_activity": "2025-04-28 10:30:03"
     },
     "7215406647": {
         "telegram_id": 7215406647,
@@ -20,5 +20,17 @@
         "registration_date": "2025-04-27 22:56:12",
         "last_activity": "2025-04-27 23:07:00",
         "1win_id": "65635"
+    },
+    "8175568823": {
+        "telegram_id": 8175568823,
+        "first_name": "Юрий",
+        "last_name": null,
+        "username": "zzwfriy",
+        "language_code": "ru",
+        "predictions_left": 8,
+        "full_access": false,
+        "registration_date": "2025-04-28 10:26:34",
+        "last_activity": "2025-04-28 10:26:50",
+        "1win_id": "777"
     }
 }
