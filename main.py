@@ -60,17 +60,17 @@ def registration_menu():
 def start(message):
     bot.send_message(
         message.chat.id,
-"""
-*💎 Добро пожаловать в RICHES MINES!*
-
-*💣 Mines* — азартная игра на платформе *1win*, основанная на классическом «Сапёре».
-
-*🎯 Цель*: Открывать безопасные ячейки, избегая мин.
-
-*🤖 Наш бот* использует *нейросеть ChatGPT-4* и предсказывает расположение мин с *точностью до 95%*.
-
-*❗️ Важно*: Бот работает *только с аккаунтами 1win*, зарегистрированными через раздел *«Регистрация»* в этом боте.
-""",
+        """
+        *💎 Добро пожаловать в RICHES MINES!*
+        
+        *💣 Mines* — азартная игра на платформе *1win*, основанная на классическом «Сапёре».
+        
+        *🎯 Цель*: Открывать безопасные ячейки, избегая мин.
+        
+        *🤖 Наш бот* использует *нейросеть ChatGPT-4* и предсказывает расположение мин с *точностью до 95%*.
+        
+        *❗️ Важно*: Бот работает *только с аккаунтами 1win*, зарегистрированными через раздел *«Регистрация»* в этом боте.
+        """,
         parse_mode='Markdown',
         reply_markup=main_menu()
     )
@@ -195,7 +195,7 @@ def handle_signal(message):
 👥 Для получения полного доступа отправьте [администратору](https://t.me/korbetov?text=Привет!👋%20Как%20получить%20полный%20доступ?) сообщение.
 """,
             parse_mode='Markdown',
-            disable_web_page_preview = True
+            disable_web_page_preview=True
         )
         return
 
@@ -258,6 +258,7 @@ def go_to_main_menu(message):
         reply_markup=main_menu()
     )
 
+
 # Команда для выдачи полного доступа
 @bot.message_handler(commands=['giveaccess'])
 def give_access(message):
@@ -279,6 +280,7 @@ def give_access(message):
     else:
         bot.reply_to(message, "❌ Пользователь не найден.")
 
+
 # Старт рассылки
 @bot.message_handler(commands=['broadcast'])
 def start_broadcast(message):
@@ -291,16 +293,21 @@ def start_broadcast(message):
     msg = bot.send_message(message.chat.id, "Выбери тип рассылки:", reply_markup=markup)
     bot.register_next_step_handler(msg, choose_broadcast_type)
 
+
 # Выбор типа рассылки
 def choose_broadcast_type(message):
     if message.text == "📝 Текст":
-        msg = bot.send_message(message.chat.id, "✍️ Напиши текст для рассылки:", reply_markup=types.ReplyKeyboardRemove())
+        msg = bot.send_message(message.chat.id, "✍️ Напиши текст для рассылки:",
+                               reply_markup=types.ReplyKeyboardRemove())
         bot.register_next_step_handler(msg, broadcast_text)
     elif message.text == "🖼️ Фото + текст":
-        msg = bot.send_message(message.chat.id, "📸 Отправь фото для рассылки:", reply_markup=types.ReplyKeyboardRemove())
+        msg = bot.send_message(message.chat.id, "📸 Отправь фото для рассылки:",
+                               reply_markup=types.ReplyKeyboardRemove())
         bot.register_next_step_handler(msg, broadcast_photo)
     else:
-        bot.send_message(message.chat.id, "⛔ Неверный выбор. Попробуй снова /broadcast", reply_markup=types.ReplyKeyboardRemove())
+        bot.send_message(message.chat.id, "⛔ Неверный выбор. Попробуй снова /broadcast",
+                         reply_markup=types.ReplyKeyboardRemove())
+
 
 # Текстовая рассылка
 def broadcast_text(message):
@@ -312,6 +319,7 @@ def broadcast_text(message):
             print(f"Не отправлено {user_id}: {e}")
     bot.send_message(message.chat.id, "✅ Текстовая рассылка завершена.")
 
+
 # Фото + текст
 def broadcast_photo(message):
     if not message.photo:
@@ -321,6 +329,7 @@ def broadcast_photo(message):
     file_id = message.photo[-1].file_id
     msg = bot.send_message(message.chat.id, "✍️ Теперь напиши подпись к фото:")
     bot.register_next_step_handler(msg, lambda m: send_photo_broadcast(m, file_id))
+
 
 def send_photo_broadcast(message, file_id):
     caption = message.text
@@ -387,6 +396,12 @@ def get_users(message):
             bot.send_message(message.chat.id, users_text)
     else:
         bot.send_message(message.chat.id, "Файл users.json пока не создан.")
+
+
+@bot.message_handler(func=lambda message: True)
+def unknown_command(message):
+    bot.send_message(message.chat.id,
+                     "Я не понимаю эту команду. Используйте кнопки меню или введите /start для перезапуска бота.")
 
 
 # Запуск бота
