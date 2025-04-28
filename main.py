@@ -225,7 +225,7 @@ def handle_signal(message):
 *❗️Выставьте 3 ловушки. Это важно!*
 *⚡️️При неудаче удвой ставку, чтобы перекрыть потерю.*
 
-@riches_mines_bot
+@riches\_mines\_bot
 """,
                 parse_mode='Markdown'
             )
@@ -241,7 +241,7 @@ def handle_signal(message):
 *❗️Выставьте 3 ловушки. Это важно!*
 *⚡️️При неудаче удвой ставку, чтобы перекрыть потерю.*
 
-@riches_mines_bot
+@riches\_mines\_bot
 """,
                 parse_mode='Markdown'
             )
