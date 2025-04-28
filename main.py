@@ -363,6 +363,32 @@ def handle_github_backup(message):
         print(error_msg)  # Для логов
         bot.reply_to(message, error_msg)
 
+
+@bot.message_handler(commands=['get_users'])
+def get_users(message):
+    # Проверяем, есть ли файл
+    if os.path.exists('users.json'):
+        with open('users.json', 'r') as file:
+            users = json.load(file)
+
+        # Формируем текст
+        users_text = json.dumps(users, indent=4, ensure_ascii=False)
+
+        # Если текст слишком длинный для одного сообщения, отправляем как файл
+        if len(users_text) > 4000:
+            with open('temp_users.json', 'w', encoding='utf-8') as temp_file:
+                json.dump(users, temp_file, indent=4, ensure_ascii=False)
+
+            with open('temp_users.json', 'rb') as temp_file:
+                bot.send_document(message.chat.id, temp_file)
+            os.remove('temp_users.json')  # Удаляем временный файл
+        else:
+            # Отправляем просто содержимое без дополнительного текста
+            bot.send_message(message.chat.id, users_text)
+    else:
+        bot.send_message(message.chat.id, "Файл users.json пока не создан.")
+
+
 # Запуск бота
 if __name__ == "__main__":
     bot.polling(none_stop=True)
