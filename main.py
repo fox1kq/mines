@@ -5,9 +5,11 @@ from datetime import datetime
 import random
 from git import Repo
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Инициализация бота
-TOKEN = '7723929403:AAFkBRy-Dbogt74fZgnIvquI4mLvjg-XFTQ'
+TOKEN = os.getenv('TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
 # Загружаем пользователей
@@ -190,12 +192,12 @@ def handle_signal(message):
         bot.send_message(
             message.chat.id,
             """
-❌ У вас закончились бесплатные прогнозы!
+    ❌ У вас закончились бесплатные прогнозы!
 
-👥 Для получения полного доступа отправьте [администратору](https://t.me/korbetov?text=Привет!👋%20Как%20получить%20полный%20доступ?) сообщение.
-""",
-            parse_mode='Markdown',
-            disable_web_page_preview = True
+    👥 Для получения полного доступа отправьте <a href="https://t.me/korbetov?text=Привет!👋 Как получить полный доступ?">администратору</a> сообщение.
+    """,
+            parse_mode='HTML',
+            disable_web_page_preview=True
         )
         return
 
