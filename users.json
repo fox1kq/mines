@@ -44,5 +44,29 @@
         "registration_date": "2025-05-01 13:53:46",
         "last_activity": "2025-05-01 13:58:16",
         "1win_id": "314411296"
+    },
+    "8175568823": {
+        "telegram_id": 8175568823,
+        "first_name": "Юрий",
+        "last_name": null,
+        "username": "zzwfriy",
+        "language_code": "ru",
+        "predictions_left": 0,
+        "full_access": false,
+        "registration_date": "2025-05-02 10:25:22",
+        "last_activity": "2025-05-02 10:25:24",
+        "1win_id": "423423423"
+    },
+    "6882899141": {
+        "telegram_id": 6882899141,
+        "first_name": "Lukas",
+        "last_name": "Kiselevskis",
+        "username": "Zoreola",
+        "language_code": "lt",
+        "predictions_left": 0,
+        "full_access": false,
+        "registration_date": "2025-05-02 12:13:36",
+        "last_activity": "2025-05-03 04:57:55",
+        "1win_id": "311463768"
     }
 }
