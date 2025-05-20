@@ -7,7 +7,7 @@
         "predictions_left": 0,
         "full_access": true,
         "1win_id": "432442332",
-        "last_activity": "2025-05-01 17:52:42"
+        "last_activity": "2025-05-09 08:50:36"
     },
     "7215406647": {
         "telegram_id": 7215406647,
@@ -68,5 +68,77 @@
         "registration_date": "2025-05-02 12:13:36",
         "last_activity": "2025-05-03 04:57:55",
         "1win_id": "311463768"
+    },
+    "8055531749": {
+        "telegram_id": 8055531749,
+        "first_name": "maksim1337",
+        "last_name": null,
+        "username": "glizzybean",
+        "language_code": "ru",
+        "predictions_left": 0,
+        "full_access": false,
+        "registration_date": "2025-05-04 20:36:22",
+        "last_activity": "2025-05-04 20:36:54",
+        "1win_id": "38213213294"
+    },
+    "7779034172": {
+        "telegram_id": 7779034172,
+        "first_name": "Михаил",
+        "last_name": null,
+        "username": null,
+        "language_code": "ru",
+        "predictions_left": 0,
+        "full_access": false,
+        "registration_date": "2025-05-05 12:49:38",
+        "last_activity": "2025-05-05 12:49:41",
+        "1win_id": "4243423"
+    },
+    "7788006686": {
+        "telegram_id": 7788006686,
+        "first_name": "Turka",
+        "last_name": null,
+        "username": null,
+        "language_code": "ru",
+        "predictions_left": 7,
+        "full_access": false,
+        "registration_date": "2025-05-05 22:18:44",
+        "last_activity": "2025-05-05 22:20:52",
+        "1win_id": "83333001"
+    },
+    "7432129761": {
+        "telegram_id": 7432129761,
+        "first_name": "Темик",
+        "last_name": null,
+        "username": "Tema1439",
+        "language_code": "ru",
+        "predictions_left": 5,
+        "full_access": false,
+        "registration_date": "2025-05-08 06:47:50",
+        "last_activity": "2025-05-08 06:48:05",
+        "1win_id": "315089813"
+    },
+    "5089732123": {
+        "telegram_id": 5089732123,
+        "first_name": "Zloy",
+        "last_name": null,
+        "username": "Zloy_775",
+        "language_code": "ru",
+        "predictions_left": 2,
+        "full_access": false,
+        "registration_date": "2025-05-08 06:56:54",
+        "last_activity": "2025-05-14 18:45:24",
+        "1win_id": "315021643"
+    },
+    "7435118080": {
+        "telegram_id": 7435118080,
+        "first_name": "Юрий",
+        "last_name": null,
+        "username": null,
+        "language_code": "ru",
+        "predictions_left": 8,
+        "full_access": false,
+        "registration_date": "2025-05-10 04:54:39",
+        "last_activity": "2025-05-11 10:58:39",
+        "1win_id": "315273154"
     }
 }
