@@ -140,5 +140,41 @@
         "registration_date": "2025-05-10 04:54:39",
         "last_activity": "2025-05-11 10:58:39",
         "1win_id": "315273154"
+    },
+    "8151764911": {
+        "telegram_id": 8151764911,
+        "first_name": "ᅠзахар",
+        "last_name": null,
+        "username": null,
+        "language_code": "ru",
+        "predictions_left": 9,
+        "full_access": false,
+        "registration_date": "2025-05-24 11:23:42",
+        "last_activity": "2025-05-24 11:26:53",
+        "1win_id": "314881641"
+    },
+    "7001485345": {
+        "telegram_id": 7001485345,
+        "first_name": "der",
+        "last_name": null,
+        "username": "dertyu123456",
+        "language_code": "ru",
+        "predictions_left": 8,
+        "full_access": false,
+        "registration_date": "2025-05-24 17:51:48",
+        "last_activity": "2025-05-24 17:51:55",
+        "1win_id": "637474554"
+    },
+    "7394800365": {
+        "telegram_id": 7394800365,
+        "first_name": "𝙄𝙨𝙡𝙖𝙢",
+        "last_name": null,
+        "username": "gamzaev00",
+        "language_code": "ru",
+        "predictions_left": 6,
+        "full_access": false,
+        "registration_date": "2025-05-27 21:51:56",
+        "last_activity": "2025-05-27 21:52:10",
+        "1win_id": "45885768"
     }
 }
