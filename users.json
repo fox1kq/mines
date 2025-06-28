@@ -176,5 +176,53 @@
         "registration_date": "2025-05-27 21:51:56",
         "last_activity": "2025-05-27 21:52:10",
         "1win_id": "45885768"
+    },
+    "5374654405": {
+        "telegram_id": 5374654405,
+        "first_name": "Анон",
+        "last_name": "Северюхин",
+        "username": "antontonto",
+        "language_code": "ru",
+        "predictions_left": 0,
+        "full_access": false,
+        "registration_date": "2025-06-03 15:39:24",
+        "last_activity": "2025-06-06 10:42:17",
+        "1win_id": "314693691"
+    },
+    "7788669271": {
+        "telegram_id": 7788669271,
+        "first_name": "Pedro Muhammed 👨🏾‍💻💵",
+        "last_name": null,
+        "username": "Pedrodavid21",
+        "language_code": "pt-br",
+        "predictions_left": 0,
+        "full_access": false,
+        "registration_date": "2025-06-17 23:11:28",
+        "last_activity": "2025-06-17 23:21:09",
+        "1win_id": "320238112"
+    },
+    "7665357926": {
+        "telegram_id": 7665357926,
+        "first_name": "Vvvertix👻",
+        "last_name": null,
+        "username": "Vvvertix",
+        "language_code": "ru",
+        "predictions_left": 9,
+        "full_access": false,
+        "registration_date": "2025-06-18 07:14:08",
+        "last_activity": "2025-06-18 07:44:46",
+        "1win_id": "320290099"
+    },
+    "5454339022": {
+        "telegram_id": 5454339022,
+        "first_name": "SOLODOV",
+        "last_name": "🦈",
+        "username": "Cabokq",
+        "language_code": "ru",
+        "predictions_left": 0,
+        "full_access": true,
+        "registration_date": "2025-06-25 20:54:23",
+        "last_activity": "2025-06-25 21:07:36",
+        "1win_id": "321495569"
     }
 }
